@@ -34,6 +34,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
     // listener for increment by
     document.querySelector('header .incrementBy').addEventListener('keyup', (ev) => {
+
         if (ev.keyCode === 13) {
             let amount = ev.target.value;
 
