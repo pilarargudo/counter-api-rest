@@ -2,7 +2,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
     // declarations
     ///////////////
-
+    const baseApiUrl = 'http://localhost:4000';
     const counterNode = document.querySelector( '.counter' );
 
     const updateCounterDOM = (value) => {
@@ -10,7 +10,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
     }
 
     // get initial value from backend
-    fetch( 'http://localhost:4000/value' )
+    fetch( baseApiUrl + '/value' )
         .then( response => response.json() )
         .then( data => {
             updateCounterDOM(data.counterValue )
@@ -25,10 +25,11 @@ document.addEventListener( 'DOMContentLoaded', function () {
         // increment counter
 
 
-        let num = Number( counterNode.innerText )
-
-        let nextValue = num + 1;
-        counterNode.innerText = nextValue;
+        fetch( baseApiUrl  +'/increment' )
+        .then (res => res.json())
+        .then( data => {
+            updateCounterDOM(data.counterValue)
+        })
 
     } )
 
