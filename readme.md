@@ -9,4 +9,11 @@ Ejercicio práctico para conectar un API rest y un frontend
 - DOM manipulation vanilla JS
 - flexbox
 
-## Features
+## TO DO
+- [x] read data from backend
+- [x] increment
+- [x] increment by amount
+- [ ] decrement
+- [ ] reset
+- [ ] background color
+    -  utilizar document.querySelector('main').style.backgroundColor = 'blue'
