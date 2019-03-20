@@ -32,4 +32,20 @@ document.addEventListener( 'DOMContentLoaded', function () {
             })
 
     } )
+
+    // listener for increment by
+    document.querySelector('header .incrementBy').addEventListener('keyup', (ev) => {
+        if (ev.keyCode === 13) {
+            let amount = ev.target.value;
+
+            fetch( baseApiUrl + '/incrementBy/' + amount )
+                .then( res => res.json() )
+                .then( data => {
+                    updateCounterDOM( data.counterValue )
+                } )
+
+
+            ev.target.value = '';
+        }
+    })
 } )
