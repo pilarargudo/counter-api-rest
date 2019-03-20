@@ -30,6 +30,18 @@ app.get('/value', (req,res) => {
 
 app.get( '/increment', ( req, res ) => {
 
+     // READ JSON FROM ROM
+    const jsonString = fs.readFileSync( './db.json', 'UTF-8' );
+    const data = JSON.parse( jsonString );
+
+
+    // UPDATE DATA ON RAM
+    data.counterValue += 1;
+
+    // WRITE BACK THE DATA TO ROM
+    fs.writeFileSync( './db.json' , JSON.stringify( data))
+
+    res.json( data );
 
 } )
 

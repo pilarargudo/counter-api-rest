@@ -26,11 +26,10 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 
         fetch( baseApiUrl  +'/increment' )
-        .then (res => res.json())
-        .then( data => {
-            updateCounterDOM(data.counterValue)
-        })
+            .then (res => res.json())
+            .then( data => {
+                updateCounterDOM(data.counterValue)
+            })
 
     } )
-
 } )
