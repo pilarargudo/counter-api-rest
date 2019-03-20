@@ -10,15 +10,14 @@ document.addEventListener( 'DOMContentLoaded', function () {
     }
 
     // get initial value from backend
-    fetch( baseApiUrl + '/value' )
+    fetch( baseApiUrl + '/data' )
         .then( response => response.json() )
         .then( data => {
-            updateCounterDOM(data.counterValue )
+            updateCounterDOM( data.counterValue )
         } )
 
     // Listeners
     ////////////
-
 
     // listener for incremente
     document.querySelector( 'header .increment' ).addEventListener( 'click', () => {
@@ -42,10 +41,11 @@ document.addEventListener( 'DOMContentLoaded', function () {
                 .then( res => res.json() )
                 .then( data => {
                     updateCounterDOM( data.counterValue )
+                    ev.target.value = '';
                 } )
+                .catch(console.error)
 
 
-            ev.target.value = '';
         }
     })
 } )

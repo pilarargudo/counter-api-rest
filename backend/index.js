@@ -20,7 +20,7 @@ app.use( function ( req, res, next ) {
 
 
 
-app.get('/value', (req,res) => {
+app.get('/data', (req,res) => {
 
     const jsonString =  fs.readFileSync('./db.json','UTF-8');
     const data = JSON.parse(jsonString);
