@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			.then(data => {
 				updateCounterDOM(data.counterValue)
 
-				// TODO RESET color
-				//data.color === "grey";
+				// Reset color as picker color default
+				data.color = "#000000";
 				updateCounterBgColor(data.color)
 			})
 
