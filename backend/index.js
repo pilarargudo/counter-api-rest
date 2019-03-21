@@ -1,5 +1,7 @@
 const express = require( 'express' );
 const app = express();
+// TODO
+var morgan = require('morgan');
 
 const fs = require( 'fs' );
 
@@ -19,7 +21,7 @@ app.use( function ( req, res, next ) {
 } );
 
 
-
+// init 
 app.get('/data', (req,res) => {
 
     const jsonString =  fs.readFileSync('./db.json','UTF-8');
@@ -27,6 +29,7 @@ app.get('/data', (req,res) => {
     res.json(data);
 
 })
+
 
 app.get( '/increment', ( req, res ) => {
 
@@ -36,6 +39,7 @@ app.get( '/increment', ( req, res ) => {
 
 
     // UPDATE DATA ON RAM
+    // TODO si está vacío se está sumando +1
     data.counterValue += 1;
 
     // WRITE BACK THE DATA TO ROM
@@ -51,9 +55,14 @@ app.get( '/incrementBy/:amount', ( req, res ) => {
     const jsonString = fs.readFileSync( './db.json', 'UTF-8' );
     const data = JSON.parse( jsonString );
 
-
     let amount = Number( req.params.amount )
+
+    // TODO VALIDACIONES
+
     if (isNaN(amount)) {
+        // INFO 
+        // isNaN : Evalúa un argumento para determinar si es un número.
+        // isNaN intenta convertir el parámetro pasado a un número. Si el parámetro no se puede convertir, devuelve true; en caso contrario, devuelve false.
         res.status(500).json({message:'UPS :('})
         return;
     }
@@ -67,7 +76,87 @@ app.get( '/incrementBy/:amount', ( req, res ) => {
 
 } )
 
+app.get( '/decrement', ( req, res ) => {
 
+    // READ JSON FROM ROM
+   const jsonString = fs.readFileSync( './db.json', 'UTF-8' );
+   const data = JSON.parse( jsonString );
+
+
+   // UPDATE DATA ON RAM
+   // TODO si está vacío se está restando siempre +1
+   // fijo le restamos -1
+   data.counterValue += -1;
+
+   // WRITE BACK THE DATA TO ROM
+   fs.writeFileSync( './db.json' , JSON.stringify( data))
+
+   res.json( data );
+
+} )
+
+app.get( '/decrementBy/:amount', ( req, res ) => {
+
+    // READ JSON FROM ROM
+    const jsonString = fs.readFileSync( './db.json', 'UTF-8' );
+    const data = JSON.parse( jsonString );
+
+    let amount = Number( req.params.amount )
+
+    // TODO VALIDACIONES
+    if (isNaN(amount)) {
+        res.status(500).json({message:'UPS :('})
+        return;
+    }
+    // UPDATE DATA ON RAM
+    data.counterValue -= amount;
+
+    // WRITE BACK THE DATA TO ROM
+    fs.writeFileSync( './db.json', JSON.stringify( data ) );
+
+    res.json( data );
+
+} )
+
+app.get( '/reset', ( req, res ) => {
+
+    // READ JSON FROM ROM
+   const jsonString = fs.readFileSync( './db.json', 'UTF-8' );
+   const data = JSON.parse( jsonString );
+
+
+   // UPDATE DATA ON RAM
+   // TODO si está vacío se está restando siempre fijo le restamos -1
+   data.counterValue = 0;
+
+   // WRITE BACK THE DATA TO ROM
+   fs.writeFileSync( './db.json' , JSON.stringify( data))
+
+   res.json( data );
+
+} )
+
+
+app.get( '/color/:bgColor', ( req, res ) => {
+
+    // READ JSON FROM ROM
+    const jsonString = fs.readFileSync( './db.json', 'UTF-8' );
+    const data = JSON.parse( jsonString );
+
+    let bgColor =  String( req.params.bgColor )
+    console.log(bgColor)
+
+    // UPDATE DATA ON RAM
+    // data.counterValue += amount;
+    //data.color === bgColor;
+    data.color = bgColor;
+
+    // WRITE BACK THE DATA TO ROM
+    fs.writeFileSync( './db.json', JSON.stringify( data ) );
+
+    res.json( data );
+
+} )
 
 
 

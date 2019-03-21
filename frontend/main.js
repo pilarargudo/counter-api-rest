@@ -1,52 +1,156 @@
-document.addEventListener( 'DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-    // declarations
-    ///////////////
-    const baseApiUrl = 'http://localhost:4000';
-    const counterNode = document.querySelector( '.counter' );
+	// declarations
+	///////////////
+	const baseApiUrl = 'http://localhost:4000';
+	const counterNode = document.querySelector('.counter');
 
-    const updateCounterDOM = (value) => {
-        counterNode.innerText = String( value )
-    }
+    const mainNode = document.querySelector('main');
 
-    // get initial value from backend
-    fetch( baseApiUrl + '/data' )
-        .then( response => response.json() )
-        .then( data => {
-            updateCounterDOM( data.counterValue )
-        } )
+	// value counter
+	const updateCounterDOM = (value) => {
+		counterNode.innerText = String(value)
+	}
 
-    // Listeners
-    ////////////
+	// bg color counter
+	const updateCounterBgColor = (value) => {
 
-    // listener for incremente
-    document.querySelector( 'header .increment' ).addEventListener( 'click', () => {
-        // increment counter
+		// TODO mainNode
+		//mainNode.style.backgroundColor = String(value)
+		document.querySelector('main').style.backgroundColor = String(value)
 
+	}
 
-        fetch( baseApiUrl  +'/increment' )
-            .then (res => res.json())
-            .then( data => {
-                updateCounterDOM(data.counterValue)
-            })
+	// get initial value from backend
+	fetch(baseApiUrl + '/data')
+		.then(response => response.json())
+		.then(data => {
+			updateCounterDOM(data.counterValue);
+			updateCounterBgColor(data.color);
+		})
 
-    } )
+	// Listeners
+	////////////
 
-    // listener for increment by
-    document.querySelector('header .incrementBy').addEventListener('keyup', (ev) => {
-
-        if (ev.keyCode === 13) {
-            let amount = ev.target.value;
-
-            fetch( baseApiUrl + '/incrementBy/' + amount )
-                .then( res => res.json() )
-                .then( data => {
-                    updateCounterDOM( data.counterValue )
-                    ev.target.value = '';
-                } )
-                .catch(console.error)
+	// listener for increment
+	document.querySelector('header .increment').addEventListener('click', () => {
+		// increment counter
 
 
-        }
+		fetch(baseApiUrl + '/increment')
+			.then(res => res.json())
+			.then(data => {
+				updateCounterDOM(data.counterValue)
+			})
+
+	})
+
+	// listener for increment by
+	document.querySelector('header .incrementBy').addEventListener('keyup', (ev) => {
+
+		if (ev.keyCode === 13) {
+			let amount = ev.target.value;
+
+			fetch(baseApiUrl + '/incrementBy/' + amount)
+				.then(res => res.json())
+				.then(data => {
+					updateCounterDOM(data.counterValue)
+					ev.target.value = '';
+				})
+				.catch(console.error)
+
+
+		}
+	})
+
+	// listener for decrement
+	// INFO: querySelector tomará el primer elemento que encuentre
+	document.querySelector('header .decrement').addEventListener('click', () => {
+		// decrement counter
+
+		fetch(baseApiUrl + '/decrement')
+			.then(res => res.json())
+			.then(data => {
+				updateCounterDOM(data.counterValue)
+			})
+
+	})
+
+	// listener for decrement by
+	document.querySelector('header .decrementBy').addEventListener('keyup', (ev) => {
+
+		if (ev.keyCode === 13) {
+			let amount = ev.target.value;
+
+			fetch(baseApiUrl + '/decrementBy/' + amount)
+				.then(res => res.json())
+				.then(data => {
+					updateCounterDOM(data.counterValue)
+					ev.target.value = '';
+				})
+				.catch(console.error)
+
+
+		}
+	})
+
+	// listener for reset
+	document.querySelector('header .reset').addEventListener('click', () => {
+		// reset counter
+		fetch(baseApiUrl + '/reset')
+			.then(res => res.json())
+			.then(data => {
+				updateCounterDOM(data.counterValue)
+
+				// TODO RESET color
+				//data.color === "grey";
+				updateCounterBgColor(data.color)
+			})
+
     })
-} )
+			
+		// listener for color
+		// const color = document.querySelector('.bg-color');
+		document.querySelector('.bg-color').addEventListener("change", function (ev) {
+
+		// TODO las variables tienen que estar dentro para que lo coja cuando guarda
+		// TODO cambiar sobre el evento value?		
+		// const bgColor = document.querySelector('.bg-color').value;
+
+		// let endpoint = baseApiUrl + '/color/' + encodeURIComponent(bgColor);
+		// console.log(endpoint);
+
+		// fetch(endpoint)
+		// 	.then(res => res.json())
+		// 	.then(data => {
+		// 		updateCounterBgColor(data.color)				
+
+		// 		// ev.target.value = '';
+		// 		// bgColor = '';
+
+		// 	})
+		// 	.catch(console.error)
+
+
+				let bgColor = ev.target.value;
+				
+				let endpoint = baseApiUrl + '/color/' + encodeURIComponent(bgColor);
+		    console.log(endpoint);
+
+				fetch(endpoint)
+					.then(res => res.json())
+					.then(data => {
+						updateCounterBgColor(data.color)
+						//ev.target.value = '';
+						//bgColor = '';
+
+					})
+					.catch(console.error)
+	
+	
+
+
+	}, false);
+
+
+})

@@ -24,3 +24,6 @@ main {
     align-items: flex-start;
 
 }
+.reset{
+    margin: 0 1em;
+}
