@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	// bg color counter
 	const updateCounterBgColor = (value) => {
 
-		// TODO mainNode
-		//mainNode.style.backgroundColor = String(value)
-		document.querySelector('main').style.backgroundColor = String(value)
+		document.querySelector('main').style.backgroundColor = String(value);
+		// initial value picker
+		document.querySelector('.picker').value = String(value);
 
 	}
 
@@ -111,26 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			
 		// listener for color
 		// const color = document.querySelector('.bg-color');
-		document.querySelector('.bg-color').addEventListener("change", function (ev) {
-
-		// TODO las variables tienen que estar dentro para que lo coja cuando guarda
-		// TODO cambiar sobre el evento value?		
-		// const bgColor = document.querySelector('.bg-color').value;
-
-		// let endpoint = baseApiUrl + '/color/' + encodeURIComponent(bgColor);
-		// console.log(endpoint);
-
-		// fetch(endpoint)
-		// 	.then(res => res.json())
-		// 	.then(data => {
-		// 		updateCounterBgColor(data.color)				
-
-		// 		// ev.target.value = '';
-		// 		// bgColor = '';
-
-		// 	})
-		// 	.catch(console.error)
-
+		document.querySelector('.picker').addEventListener("change", function (ev) {
 
 				let bgColor = ev.target.value;
 				
@@ -141,7 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 					.then(res => res.json())
 					.then(data => {
 						updateCounterBgColor(data.color)
-						//ev.target.value = '';
+						// TODO
+						ev.target.value = bgColor;
 						//bgColor = '';
 
 					})
